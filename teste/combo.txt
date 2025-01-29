@@ -1,0 +1,7 @@
+COMBO {
+  name: "Gruul Storm";
+  colors: {R, G};
+  cards: {"Underworld Breach", "Manamorphose", "Grapeshot"};
+  strategy: "Utiliza recursão para gerar mana e cartas infinitas.";
+  win_condition: "Dano letal ao oponente com 'Grapeshot'.";
+}
