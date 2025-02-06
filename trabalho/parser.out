@@ -1,0 +1,121 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> card
+Rule 1     card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT
+Rule 2     card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT creature_stats
+Rule 3     mana_cost -> MANA_COST
+Rule 4     mana_cost -> mana_cost MANA_COST
+Rule 5     creature_stats -> POWER TOUGHNESS
+
+Terminals, with rules where they appear
+
+CARD_NAME            : 1 2
+CARD_TEXT            : 1 2
+CARD_TYPE            : 1 2
+MANA_COST            : 3 4
+POWER                : 5
+TOUGHNESS            : 5
+error                : 
+
+Nonterminals, with rules where they appear
+
+card                 : 0
+creature_stats       : 2
+mana_cost            : 1 2 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . card
+    (1) card -> . CARD_NAME mana_cost CARD_TYPE CARD_TEXT
+    (2) card -> . CARD_NAME mana_cost CARD_TYPE CARD_TEXT creature_stats
+
+    CARD_NAME       shift and go to state 2
+
+    card                           shift and go to state 1
+
+state 1
+
+    (0) S' -> card .
+
+
+
+state 2
+
+    (1) card -> CARD_NAME . mana_cost CARD_TYPE CARD_TEXT
+    (2) card -> CARD_NAME . mana_cost CARD_TYPE CARD_TEXT creature_stats
+    (3) mana_cost -> . MANA_COST
+    (4) mana_cost -> . mana_cost MANA_COST
+
+    MANA_COST       shift and go to state 4
+
+    mana_cost                      shift and go to state 3
+
+state 3
+
+    (1) card -> CARD_NAME mana_cost . CARD_TYPE CARD_TEXT
+    (2) card -> CARD_NAME mana_cost . CARD_TYPE CARD_TEXT creature_stats
+    (4) mana_cost -> mana_cost . MANA_COST
+
+    CARD_TYPE       shift and go to state 5
+    MANA_COST       shift and go to state 6
+
+
+state 4
+
+    (3) mana_cost -> MANA_COST .
+
+    CARD_TYPE       reduce using rule 3 (mana_cost -> MANA_COST .)
+    MANA_COST       reduce using rule 3 (mana_cost -> MANA_COST .)
+
+
+state 5
+
+    (1) card -> CARD_NAME mana_cost CARD_TYPE . CARD_TEXT
+    (2) card -> CARD_NAME mana_cost CARD_TYPE . CARD_TEXT creature_stats
+
+    CARD_TEXT       shift and go to state 7
+
+
+state 6
+
+    (4) mana_cost -> mana_cost MANA_COST .
+
+    CARD_TYPE       reduce using rule 4 (mana_cost -> mana_cost MANA_COST .)
+    MANA_COST       reduce using rule 4 (mana_cost -> mana_cost MANA_COST .)
+
+
+state 7
+
+    (1) card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT .
+    (2) card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT . creature_stats
+    (5) creature_stats -> . POWER TOUGHNESS
+
+    $end            reduce using rule 1 (card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT .)
+    POWER           shift and go to state 9
+
+    creature_stats                 shift and go to state 8
+
+state 8
+
+    (2) card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT creature_stats .
+
+    $end            reduce using rule 2 (card -> CARD_NAME mana_cost CARD_TYPE CARD_TEXT creature_stats .)
+
+
+state 9
+
+    (5) creature_stats -> POWER . TOUGHNESS
+
+    TOUGHNESS       shift and go to state 10
+
+
+state 10
+
+    (5) creature_stats -> POWER TOUGHNESS .
+
+    $end            reduce using rule 5 (creature_stats -> POWER TOUGHNESS .)
+
