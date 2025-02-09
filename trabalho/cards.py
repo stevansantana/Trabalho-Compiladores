@@ -7,3 +7,5 @@ def obter_carta(jogador, nome):
 def adicionar_carta_dinamica(jogador, nome, atributos):
     """ Adiciona uma carta criada dinamicamente ao dicionário. """
     jogador.cartas_dinamicas[nome] = atributos
+
+

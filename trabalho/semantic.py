@@ -32,6 +32,20 @@ def validar_carta(carta):
     print(f"Carta '{carta['Nome']}' validada com sucesso!")
     return True
 
+def validar_combo(carta1, carta2):
+    """ Verifica se as duas cartas formam um combo válido. """
+    # Combo Maldição da Morte + Peste
+    if (carta1["Nome"] == "Maldição da Morte" and carta2["Nome"] == "Peste") or \
+       (carta1["Nome"] == "Peste" and carta2["Nome"] == "Maldição da Morte"):
+        return "Maldição da Morte + Peste"
+    
+    # Combo City on Fire + Peste
+    if (carta1["Nome"] == "City on Fire" and carta2["Nome"] == "Peste") or \
+       (carta1["Nome"] == "Peste" and carta2["Nome"] == "City on Fire"):
+        return "City on Fire + Peste"
+    
+    return None
+
 
 def limpar_tela():
         """Limpa a tela do terminal."""

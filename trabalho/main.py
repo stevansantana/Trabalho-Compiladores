@@ -29,7 +29,7 @@ class Jogador:
         else:
             print(f"{jogador.nome} não tem mais cartas no baralho!")
 
-    def jogar_carta(jogador):
+    def jogar_carta(jogador, oponente):
         if not jogador.mao:
             print(f"{jogador.nome} não tem cartas na mão para jogar!")
             return
@@ -60,10 +60,29 @@ class Jogador:
                 jogador.campo.append(carta_escolhida)
                 limpar_tela()
                 print(f"{jogador.nome} jogou {carta_escolhida} no campo!")
+
+                # Verifica se há combos ativos
+                if len(jogador.campo) >= 2:
+                    carta1 = obter_carta(jogador, jogador.campo[-1])
+                    carta2 = obter_carta(jogador, jogador.campo[-2])
+                    combo = semantic.validar_combo(carta1, carta2)
+
+                    if combo == "Maldição da Morte + Peste":
+                        print("Combo 'Maldição da Morte + Peste' ativado! O dano de Peste é amplificado.")
+                        dano = 4  # Dano amplificado (2 de Peste + 2 de Maldição da Morte)
+                        oponente.vida -= dano
+                        print(f"{oponente.nome} perdeu {dano} pontos de vida! Vida restante: {oponente.vida}")
+
+                    elif combo == "City on Fire + Peste":
+                        print("Combo 'City on Fire + Peste' ativado! O dano de Peste é triplicado.")
+                        dano = 6  # Dano triplicado (2 de Peste * 3)
+                        oponente.vida -= dano
+                        print(f"{oponente.nome} perdeu {dano} pontos de vida! Vida restante: {oponente.vida}")
             else:
                 print("Mana insuficiente para jogar esta carta.")
         else:
             print("Escolha inválida.")
+
 
 
     def atacar(jogador, oponente):
@@ -109,8 +128,9 @@ def criar_carta(jogador):
     print("3. Tipo da Carta: Escolha entre Criatura, Feitiço, Encantamento, etc.")
     print('4. Texto da Carta: Insira as habilidades ou efeitos entre aspas (ex.: "Voar").')
     print("5. Poder e Resistência: Para criaturas, insira os valores de poder e resistência.\n")
-    print("Exemplo de entrada:")
-    print("Dragão Azul {2}{U} Criatura \"Voar\" 4 4\n")
+    print("Exemplos de entrada:\n")
+    print("Para criaturas: Dragão Azul {2}{U} Criatura \"Voar\" 4 4")
+    print("Para encantamentos: Peste {1}{B} Feitiço \"Causa 2 pontos de dano ao oponente\".\n")
 
     descricao = input("Digite a descrição da carta: ")
 
@@ -156,13 +176,13 @@ def pausar():
 
 def inicializar_jogo(jogador1, jogador2):
     print("🔹 Bem-vindo ao jogo simplficado de Magic The Gathering! 🔹\n")
-    print("Cada jogador deve criar 2 cartas para começar.")
+    print("Cada jogador deve criar 3 cartas para começar.")
     pausar()
     limpar_tela()
 
     for jogador in [jogador1, jogador2]:
         print(f"{jogador.nome}, crie suas cartas:")
-        for _ in range(2):  # Cada jogador cria um número cartas
+        for _ in range(3):  # Cada jogador cria um número cartas
             criar_carta(jogador)
 
 
@@ -194,7 +214,7 @@ def jogo():
         if escolha == "1":
             jogador_atual.comprar_carta()
         elif escolha == "2":
-            jogador_atual.jogar_carta()
+            jogador_atual.jogar_carta(oponente)
         elif escolha == "3":
             jogador_atual.atacar(oponente)
         elif escolha == "4": 

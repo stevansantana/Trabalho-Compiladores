@@ -1,0 +1,5 @@
+City on Fire {3}{R}{R} Encantamento "O dano causado por feitiços ou habilidades é triplicado."
+
+Peste {1}{B} Feitiço "Causa 2 pontos de dano ao oponente."
+
+Maldição da Morte {2}{B} Encantamento "No início de sua manutenção, o oponente perde 1 ponto de vida."
